@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cuts &mdash; Transverse Single Spin Assymetry Study for SpinQuest 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Transverse Single Spin Assymetry Study for SpinQuest
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Transverse Single Spin Assymetry Study for SpinQuest</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cuts</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cuts</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">headers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="e906_data_cuts">
+<a class="viewcode-back" href="../cuts.html#cuts.e906_data_cuts">[docs]</a>
+<span class="k">def</span> <span class="nf">e906_data_cuts</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">uproot</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">TTree</span><span class="o">.</span><span class="n">Model_TTree_v19</span><span class="p">,</span> <span class="n">etype</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">uproot</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">TTree</span><span class="o">.</span><span class="n">Model_TTree_v19</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the first event selection applied.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tree (uproot.models.TTree.Model_TTree_v19): TTree created with uproot</span>
+<span class="sd">        etype (str): event type: {data, Jpsi, Drell-Yan, Psi Prime}</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        uproot.models.TTree.Model_TTree_v19: TTree compatible with uproot after applying event selection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>             
+    
+    <span class="n">beam_offset</span> <span class="o">=</span> <span class="n">GetBeamOffSet</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">etype</span><span class="p">)</span>
+    <span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">branch</span><span class="p">)</span>
+
+    <span class="n">dimuon_cut_2111_v42</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dy</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.22</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dz</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">5.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dz</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">280.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dpx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.8</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dpy</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">costh</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dpz</span> <span class="o">&lt;</span> <span class="mf">116.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dpz</span> <span class="o">&gt;</span> <span class="mf">38.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dpx</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">dpx</span> <span class="o">+</span> <span class="n">events</span><span class="o">.</span><span class="n">dpy</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">dpy</span> <span class="o">&lt;</span> <span class="mf">5.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dx</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">dx</span> <span class="o">+</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dy</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">dy</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.06</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">xF</span> <span class="o">&lt;</span> <span class="mf">0.95</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">xF</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">xT</span> <span class="o">&gt;</span> <span class="mf">0.005</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">xT</span> <span class="o">&lt;</span> <span class="mf">0.55</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">trackSeparation</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">270.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq_dimuon</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">track1_cut_2111_v42</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq1_target</span> <span class="o">&lt;</span> <span class="mf">15.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">pz1_st1</span> <span class="o">&gt;</span> <span class="mf">9.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">pz1_st1</span> <span class="o">&lt;</span> <span class="mf">75.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">nHits1</span> <span class="o">&gt;</span> <span class="mi">13</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x1_t</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">x1_t</span> <span class="o">+</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_t</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_t</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">320.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x1_d</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">x1_d</span> <span class="o">+</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_d</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_d</span> <span class="o">-</span><span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1100.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x1_d</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">x1_d</span> <span class="o">+</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_d</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_d</span> <span class="o">-</span><span class="n">beam_offset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">16.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq1_target</span> <span class="o">&lt;</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">chisq1_upstream</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq1_target</span> <span class="o">&lt;</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">chisq1_dump</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">z1_v</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">5.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">z1_v</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">320.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq1</span><span class="o">/</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">nHits1</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">((</span><span class="n">events</span><span class="o">.</span><span class="n">y1_st1</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_st3</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">px1_st1</span> <span class="o">-</span> <span class="n">events</span><span class="o">.</span><span class="n">px1_st3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.416</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.008</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">py1_st1</span> <span class="o">-</span> <span class="n">events</span><span class="o">.</span><span class="n">py1_st3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.008</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">pz1_st1</span> <span class="o">-</span> <span class="n">events</span><span class="o">.</span><span class="n">pz1_st3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.08</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">((</span><span class="n">events</span><span class="o">.</span><span class="n">y1_st1</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y1_st3</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">py1_st1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.02</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">track2_cut_2111_v42</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq2_target</span> <span class="o">&lt;</span> <span class="mf">15.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">pz2_st1</span> <span class="o">&gt;</span> <span class="mf">9.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">pz2_st1</span> <span class="o">&lt;</span> <span class="mf">75.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">nHits2</span> <span class="o">&gt;</span> <span class="mi">13</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x2_t</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">x2_t</span> <span class="o">+</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_t</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_t</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">320.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x2_d</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">x2_d</span> <span class="o">+</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_d</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_d</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1100.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x2_d</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">x2_d</span> <span class="o">+</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_d</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_d</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">16.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq2_target</span> <span class="o">&lt;</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">chisq2_upstream</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq2_target</span> <span class="o">&lt;</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">events</span><span class="o">.</span><span class="n">chisq2_dump</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">z2_v</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">5.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">z2_v</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">320.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq2</span> <span class="o">/</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">nHits2</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">((</span><span class="n">events</span><span class="o">.</span><span class="n">y2_st1</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_st3</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">px2_st1</span> <span class="o">-</span> <span class="n">events</span><span class="o">.</span><span class="n">px2_st3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.416</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.008</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">py2_st1</span> <span class="o">-</span> <span class="n">events</span><span class="o">.</span><span class="n">py2_st3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.008</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">pz2_st1</span> <span class="o">-</span> <span class="n">events</span><span class="o">.</span><span class="n">pz2_st3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.08</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">((</span><span class="n">events</span><span class="o">.</span><span class="n">y2_st1</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_st3</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">py2_st1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.02</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+    <span class="n">tracks_cut_2111_v42</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">chisq1_target</span> <span class="o">+</span> <span class="n">events</span><span class="o">.</span><span class="n">chisq2_target</span> <span class="o">-</span> <span class="n">events</span><span class="o">.</span><span class="n">chisq_dimuon</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">2.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">((</span><span class="n">events</span><span class="o">.</span><span class="n">y1_st3</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">y2_st3</span> <span class="o">-</span> <span class="n">beam_offset</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">nHits1</span> <span class="o">+</span> <span class="n">events</span><span class="o">.</span><span class="n">nHits2</span> <span class="o">&gt;</span> <span class="mi">29</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">nHits1St1</span> <span class="o">+</span> <span class="n">events</span><span class="o">.</span><span class="n">nHits2St1</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x1_st1</span> <span class="o">+</span> <span class="n">events</span><span class="o">.</span><span class="n">x2_st1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">occ_cut_2111_v42</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">D1</span> <span class="o">&lt;</span> <span class="mi">400</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">D2</span> <span class="o">&lt;</span> <span class="mi">400</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">D3</span> <span class="o">&lt;</span> <span class="mi">400</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">D1</span> <span class="o">+</span> <span class="n">events</span><span class="o">.</span><span class="n">D2</span> <span class="o">+</span> <span class="n">events</span><span class="o">.</span><span class="n">D3</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">events_cut</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="n">track1_cut_2111_v42</span> <span class="o">&amp;</span> <span class="n">track2_cut_2111_v42</span> <span class="o">&amp;</span> <span class="n">dimuon_cut_2111_v42</span> <span class="o">&amp;</span> <span class="n">tracks_cut_2111_v42</span> <span class="o">&amp;</span> <span class="n">occ_cut_2111_v42</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---&gt; # of dimuons </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">events_cut</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">events_cut</span></div>
+
+
+
+<div class="viewcode-block" id="e906_mc_cuts">
+<a class="viewcode-back" href="../cuts.html#cuts.e906_mc_cuts">[docs]</a>
+<span class="k">def</span> <span class="nf">e906_mc_cuts</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">uproot</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">TTree</span><span class="o">.</span><span class="n">Model_TTree_v19</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">uproot</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">TTree</span><span class="o">.</span><span class="n">Model_TTree_v19</span><span class="p">:</span>
+
+    <span class="n">branches</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">arrays</span><span class="p">(</span><span class="n">branches</span><span class="p">)</span>
+
+    <span class="n">mc_cuts</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">mass</span> <span class="o">&gt;</span> <span class="mf">4.5</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">xF</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">xF</span> <span class="o">&lt;</span> <span class="mf">0.95</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x2</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">x2</span> <span class="o">&lt;</span> <span class="mf">0.55</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">costh</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">tree_cut</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="n">mc_cuts</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">tree_cut</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Chatura Kuruppu, Ph.D.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

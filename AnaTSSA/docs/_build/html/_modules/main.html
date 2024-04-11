@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main &mdash; Transverse Single Spin Assymetry Study for SpinQuest 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Transverse Single Spin Assymetry Study for SpinQuest
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Transverse Single Spin Assymetry Study for SpinQuest</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for main</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">headers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">cuts</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="GetMassArray">
+<a class="viewcode-back" href="../main.html#main.GetMassArray">[docs]</a>
+<span class="k">def</span> <span class="nf">GetMassArray</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns numpy array extracted from tree</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tree (tree): uproot tree</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy array: mass array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">masses</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">mass</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">Sig</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TH1D</span><span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">SetDirectory</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">masses</span><span class="p">:</span>
+        <span class="n">h</span><span class="o">.</span><span class="n">Fill</span><span class="p">()</span> </div>
+
+    
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../main.html#main.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the main function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">datafile</span> <span class="o">=</span> <span class="s2">&quot;../../ROOTFiles/roadset57_70_R008_2111v42_tmp_noPhys.root:Tree&quot;</span>
+    <span class="n">jpsifile</span> <span class="o">=</span> <span class="s2">&quot;../../ROOTFiles/mc_jpsi_LH2_M027_S001_messy_occ_pTxFweight_v2.root:Tree&quot;</span>
+    <span class="n">psipfile</span> <span class="o">=</span> <span class="s2">&quot;../../ROOTFiles/mc_psiprime_LH2_M027_S001_messy_occ_pTxFweight_v2.root:Tree&quot;</span>
+    <span class="n">dyfile</span>   <span class="o">=</span> <span class="s2">&quot;../../ROOTFiles/mc_drellyan_LH2_M027_S001_messy_occ_pTxFweight_v2.root:Tree&quot;</span>
+
+    <span class="k">with</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">datatree</span> <span class="o">=</span> <span class="n">e906_data_cuts</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jpsifile</span><span class="p">)</span> <span class="k">as</span> <span class="n">jpsi</span><span class="p">:</span>
+            <span class="n">jpsitree</span> <span class="o">=</span> <span class="n">e906_data_cuts</span><span class="p">(</span><span class="n">jpsi</span><span class="p">,</span> <span class="s2">&quot;jpsi&quot;</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dyfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">dy</span><span class="p">:</span>
+                <span class="n">dytree</span> <span class="o">=</span> <span class="n">e906_data_cuts</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span> <span class="s2">&quot;dy&quot;</span><span class="p">)</span>
+
+                <span class="k">with</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">psipfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">psip</span><span class="p">:</span>
+                    <span class="n">psiptree</span> <span class="o">=</span> <span class="n">e906_data_cuts</span><span class="p">(</span><span class="n">psip</span><span class="p">,</span> <span class="s2">&quot;psip&quot;</span><span class="p">)</span>
+
+                    <span class="n">dataMassArray</span> <span class="o">=</span> <span class="n">GetMassArray</span><span class="p">(</span><span class="n">datatree</span><span class="p">)</span>
+                    <span class="n">jpsiMassArray</span> <span class="o">=</span> <span class="n">GetMassArray</span><span class="p">(</span><span class="n">jpsitree</span><span class="p">)</span>
+                    <span class="n">psipMassArray</span> <span class="o">=</span> <span class="n">GetMassArray</span><span class="p">(</span><span class="n">psiptree</span><span class="p">)</span>
+                    <span class="n">dyMassArray</span>   <span class="o">=</span> <span class="n">GetMassArray</span><span class="p">(</span><span class="n">dytree</span>  <span class="p">)</span>
+
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data Mass: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dataMassArray</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jpsi Mass: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">jpsiMassArray</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Psip Mass: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">psipMassArray</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DY   Mass: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dyMassArray</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+                    
+
+
+
+
+
+
+
+    <span class="c1">#result_mix = uproot.open(&quot;../e906-LH2-data/merged_RS67_3089LH2.root:result_mix&quot;)</span>
+    <span class="c1">#result_flask = uproot.open(&quot;../e906-LH2-data/merged_RS67_3089flask.root:result&quot;)</span>
+
+    <span class="c1">#datatree = e906_data_cuts(data)</span>
+    <span class="c1">#tree_mix = e906_data_cuts(result_mix)</span>
+    <span class="c1">#tree_flask = e906_data_cuts(result_flask)</span>
+
+    <span class="c1">#save = uproot.open(&quot;../e906-LH2-data/e906-messy-mc.root:save&quot;)</span>
+
+    <span class="c1">#tree_mc = e906_mc_cuts(save)</span>
+
+    <span class="c1">#train_tree, test_tree = train_test_split(tree_mc.to_numpy(), test_size=0.5, shuffle=True)</span>
+
+    <span class="c1"># len1 = len(tree.mass.to_numpy())</span>
+    <span class="c1"># len2 = len(tree_mix.mass.to_numpy())</span>
+    <span class="c1"># len3 = len(tree_flask.mass.to_numpy())</span>
+    <span class="c1"># len_total = len1 + len2 + len3</span>
+
+    <span class="c1"># weight = 1.57319e+17/3.57904e+16</span>
+
+    <span class="c1"># train_dic = {</span>
+    <span class="c1">#     &quot;mass&quot;: np.concatenate((tree.mass.to_numpy(), tree_mix.mass.to_numpy(), tree_flask.mass.to_numpy())),</span>
+    <span class="c1">#     &quot;pT&quot;: np.concatenate((tree.pT.to_numpy(), tree_mix.pT.to_numpy(), tree_flask.pT.to_numpy())),</span>
+    <span class="c1">#     &quot;xB&quot;: np.concatenate((tree.xB.to_numpy(), tree_mix.xB.to_numpy(), tree_flask.xB.to_numpy())),</span>
+    <span class="c1">#     &quot;xT&quot;: np.concatenate((tree.xT.to_numpy(), tree_mix.xT.to_numpy(), tree_flask.xT.to_numpy())),</span>
+    <span class="c1">#     &quot;xF&quot;: np.concatenate((tree.xF.to_numpy(), tree_mix.xF.to_numpy(), tree_flask.xF.to_numpy())),</span>
+    <span class="c1">#     &quot;weight&quot;: np.concatenate((np.ones(len1), -1. * np.ones(len2), -weight * np.ones(len3))),</span>
+    <span class="c1"># }</span>
+
+    <span class="c1"># train_dic_mc = {</span>
+    <span class="c1">#     &quot;mass&quot;: test_tree[&quot;mass&quot;][:len_total],</span>
+    <span class="c1">#     &quot;pT&quot;: test_tree[&quot;pT&quot;][:len_total],</span>
+    <span class="c1">#     &quot;xB&quot;: test_tree[&quot;x1&quot;][:len_total],</span>
+    <span class="c1">#     &quot;xT&quot;: test_tree[&quot;x2&quot;][:len_total],</span>
+    <span class="c1">#     &quot;xF&quot;: test_tree[&quot;xF&quot;][:len_total],</span>
+    <span class="c1">#     &quot;weight&quot;: np.ones(len_total),</span>
+    <span class="c1"># }</span>
+
+    <span class="c1"># test_dic_mc = {</span>
+    <span class="c1">#     &quot;mass&quot;: test_tree[&quot;mass&quot;][:len_total],</span>
+    <span class="c1">#     &quot;pT&quot;: test_tree[&quot;pT&quot;][:len_total],</span>
+    <span class="c1">#     &quot;xB&quot;: test_tree[&quot;x1&quot;][:len_total],</span>
+    <span class="c1">#     &quot;xT&quot;: test_tree[&quot;x2&quot;][:len_total],</span>
+    <span class="c1">#     &quot;xF&quot;: test_tree[&quot;xF&quot;][:len_total],</span>
+    <span class="c1">#     &quot;weight&quot;: np.ones(len_total),</span>
+    <span class="c1"># }</span>
+
+    <span class="c1"># outputs = h5py.File(&quot;../e906-LH2-data/reweight.hdf5&quot;, &quot;w&quot;)</span>
+
+    <span class="c1"># outputs.create_dataset(&quot;train_tree/mass&quot;, data=train_dic[&quot;mass&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree/pT&quot;, data=train_dic[&quot;pT&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree/xB&quot;, data=train_dic[&quot;xB&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree/xT&quot;, data=train_dic[&quot;xT&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree/xF&quot;, data=train_dic[&quot;xF&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree/weight&quot;, data=train_dic[&quot;weight&quot;])</span>
+
+
+    <span class="c1"># outputs.create_dataset(&quot;train_tree_mc/mass&quot;, data=train_dic_mc[&quot;mass&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree_mc/pT&quot;, data=train_dic_mc[&quot;pT&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree_mc/xB&quot;, data=train_dic_mc[&quot;xB&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree_mc/xT&quot;, data=train_dic_mc[&quot;xT&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree_mc/xF&quot;, data=train_dic_mc[&quot;xF&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;train_tree_mc/weight&quot;, data=train_dic_mc[&quot;weight&quot;])</span>
+
+
+    <span class="c1"># outputs.create_dataset(&quot;test_tree_mc/mass&quot;, data=test_dic_mc[&quot;mass&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;test_tree_mc/pT&quot;, data=test_dic_mc[&quot;pT&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;test_tree_mc/xB&quot;, data=test_dic_mc[&quot;xB&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;test_tree_mc/xT&quot;, data=test_dic_mc[&quot;xT&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;test_tree_mc/xF&quot;, data=test_dic_mc[&quot;xF&quot;])</span>
+    <span class="c1"># outputs.create_dataset(&quot;test_tree_mc/weight&quot;, data=test_dic_mc[&quot;weight&quot;])</span>
+
+    <span class="c1"># outputs.close()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Chatura Kuruppu, Ph.D.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
